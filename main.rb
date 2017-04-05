@@ -40,4 +40,4 @@ b = Main.new("Alex")
 b.game_start
 puts  b.show_status_human
 puts b.show_status_computer
-  
+ 
