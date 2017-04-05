@@ -1,7 +1,5 @@
 class Deck
 
-  attr_accessor :card, :deck
-  
   def initialize
     prepare_deck
     @deck = @deck_sample.map do |card|
@@ -10,6 +8,14 @@ class Deck
     @deck.flatten!(1).shuffle!
   end
 
+  def card_from_deck
+    @deck.pop
+  end
+
+  def two_cards_from_deck
+    @deck.pop(2)
+  end
+  
   private
   
   def prepare_deck
