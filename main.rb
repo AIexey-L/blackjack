@@ -21,8 +21,8 @@ class Main
 
   #TODO add raise exeption if gamer.cards.count != 2
   def add_card(gamer)
-    begin
-      gamer.cards=(@deck.card_from_deck) if gamer.cards.count == 2
+    raise "you already have three cards" unless gamer.cards.count == 2
+      gamer.cards=(@deck.card_from_deck)
   end
   
   def status_human
