@@ -3,7 +3,7 @@ class Gamer
   attr_accessor :score, :name, :money, :cards
 
   def initialize(*name)
-    @name = name ||= "computer"
+    @name = name
     @money = 100
     @cards = []
   end
