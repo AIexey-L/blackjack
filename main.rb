@@ -48,6 +48,8 @@ class Main
   end
 
   def score(gamer)
+    #TODO if score > 21, scheck if there is an ace in gamer's cards,
+    # and substract 10
     gamer.cards.map {  |card| card.map { |crd| crd.last } }.flatten.sum
   end
 
