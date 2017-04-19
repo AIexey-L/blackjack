@@ -1,6 +1,6 @@
 class Gamer
 
-  attr_accessor :score, :name, :money, :cards
+  attr_accessor :name, :money
 
   def initialize(*name)
     @name = name
@@ -11,15 +11,11 @@ class Gamer
   # get two or one cards form deck
   def cards=(card)
     @cards << card
+    @cards.flatten!(1)
   end
 
-  # may be move to main?
-  def open_cards
+  def cards
+    @cards
   end
-
-  # able to see cards on hand for human
-  def see_kards
-  end
-
   
 end

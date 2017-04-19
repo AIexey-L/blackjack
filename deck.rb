@@ -13,7 +13,7 @@ class Deck
   end
 
   def two_cards_from_deck
-    @deck.pop(2)
+    @deck.pop(2)#.flatten(1)
   end
   
   private
