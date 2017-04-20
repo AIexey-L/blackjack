@@ -1,6 +1,5 @@
 class Gamer
-
-  attr_accessor :name, :money
+  attr_accessor :name, :money, :cards
 
   def initialize(*name)
     @name = name
@@ -13,9 +12,4 @@ class Gamer
     @cards << card
     @cards.flatten!(1)
   end
-
-  def cards
-    @cards
-  end
-  
 end

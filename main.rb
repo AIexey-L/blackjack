@@ -1,15 +1,17 @@
 require_relative 'deck'
 require_relative 'gamer'
 require_relative 'ai'
+require_relative 'who_win'
 require 'pry'
 
 class Main
 
   include Ai
+  include WhoWin
   
-  attr_reader :bank, :human, :computer
+  attr_accessor :bank, :human, :computer
   
-  def initialize(name)
+  def initialize(*name)
     @human = Gamer.new(name)
     @computer = Gamer.new
     @deck = Deck.new
@@ -24,30 +26,25 @@ class Main
   end
 
   def add_card(gamer)
-    raise "you already have three cards" unless gamer.cards.count == 2
-      gamer.cards << @deck.card_from_deck
+    raise "\nyou already have three cards" unless gamer.cards.count == 2
+    gamer.cards << @deck.card_from_deck
+    if_lose(gamer)
   end
   
   def status_human
-    "#{@human.name.join}, you have cards : #{gamer_cards(@human).join(' ')} - its #{score(self.human)} score"
+    "\n#{@human.name.join}, you have cards : #{gamer_cards(@human).join(' ')} - its #{score(@human)} score"
   end
 
   def open_status_computer
-    "Computer has cards : #{gamer_cards(@computer).join(' ')}  - its #{score(@computer)} score"
+    "\nComputer has cards : #{gamer_cards(@computer).join(' ')}  - its #{score(@computer)} score"
   end
 
   def closed_status_computer
-    "Computer has cards : #{closed_cards(@computer).join('  ')}"
+    "\nComputer has cards : #{closed_cards(@computer).join('  ')}"
   end
-
-  def open_cards
-    # TODO add win conditions
-  end
-  
-  # private
   
   def closed_cards(gamer)
-    gamer.cards.map  { |card| card.map { |crd| '*' } }
+    gamer.cards.map { '*' }
   end
   
   def gamer_cards(gamer)
@@ -70,6 +67,18 @@ class Main
     gamer.money -= 10
     @bank +=10
   end
+
+  def next_round
+    draw? ? @bank : @bank = 0
+    @deck = Deck.new
+    human.cards.clear
+    computer.cards.clear
+    game_start
+    binding.pry
+    puts status_human
+    puts closed_status_computer
+  end
+
   
   # def pass(gamer)
   #   if gamer == @human
