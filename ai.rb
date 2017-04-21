@@ -1,39 +1,24 @@
 module Ai
-
   def computer_turn
     puts "\n--- computer turn ---"
     while @computer.cards.count == 2
-      if score(@computer) <= 16 && rand(10) <= 5
-        return computer_get_card
-      elsif score(@computer) > 15 + rand(3)
-        return puts "\n--- computer dicides to pass!"
-      elsif score(@computer) > 15 + rand(3)
-        return computer_open
-      end
+      return computer_get_card if score(@computer) <= 16 && rand(10) <= 5
+      return puts "\n--- computer dicides to pass!" if score(@computer) > 15 + rand(3)
+      return computer_open if score(@computer) > 14 + rand(2)
     end
-    
-    while @computer.cards.count == 3
-      if score(@computer) > 15 + rand(3)
-        return puts "\n--- computer dicides to pass!"
-      elsif score(@computer) > 17 + rand(3)
-        return computer_open
-      end
-    end
+    open_cards while @computer.cards.count == 3
   end
 
   def computer_get_card
     puts "\n--- computer decides to get card ---"
-    self.add_card(self.computer)
-    # binding.pry
-    puts self.closed_status_computer
-    puts self.status_human
+    add_card(@computer)
+    return open_cards if computer.cards.count == 3 && score(@computer) <= 21
+    closed_cards(@computer)
   end
 
   def computer_open
     puts "\n--- computer disides to open cards! ---"
-    puts self.open_status_computer
-    puts self.status_human
-    self.who_win
+    open_cards
   end
   
 end

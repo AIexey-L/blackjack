@@ -1,4 +1,5 @@
 require_relative 'main'
+require 'pry'
 
 class Menu
   attr_reader :input, :game
@@ -16,9 +17,7 @@ class Menu
     puts '--- enter your name ---'
     name = gets.chomp
     @game = Main.new(name)
-    # game.human.name= name
     game.game_start
-    # binding.pry
     puts game.status_human
     puts game.closed_status_computer
   end
@@ -26,26 +25,24 @@ class Menu
   def menu_add_card
     begin
       game.add_card(game.human)
-      puts game.status_human
+      puts game.status_human if game.score(game.human) <= 21
     rescue RuntimeError => e
       puts "#{e.message}"
       puts "\ntry again"
     end
-    game.computer_turn
+    return game.computer_turn if game.score(game.human) <= 21 &&
+                                 game.computer.cards.count == 2
+    game.reset_deck
   end
 
   def menu_pass
     puts "\n--- passing your turn ---"
-    puts game.status_human
-    puts game.closed_status_computer
-    game.computer_turn
+    return game.computer_turn if game.human.cards.count == 2
   end
 
   def menu_open_cards
     puts "\n--- opening cards! ---\n"
-    puts game.status_human
-    puts game.open_status_computer
-    game.who_win
+    game.open_cards
   end
 
   menu = Menu.new
