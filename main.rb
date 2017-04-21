@@ -20,8 +20,8 @@ class Main
   end
 
   def game_start
-    human.cards = @deck.two_cards_from_deck
-    computer.cards = @deck.two_cards_from_deck
+    human.cards = @deck.get_two_cards
+    computer.cards = @deck.get_two_cards
     money_per_round(@human)
     money_per_round(@computer)
   end
@@ -31,22 +31,22 @@ class Main
       raise "\nYou already have three cards, "\
       'you have to open cards'
     end
-    gamer.cards << @deck.card_from_deck
+    gamer.cards << @deck.get_card.flatten(1)
     if_lose(gamer)
   end
 
   def status_human
     "\n#{@human.name.join}, you have cards : "\
-    "#{gamer_cards(@human).join(' ')} - its #{score(@human)} score"
+    "#{gamer_cards(human).join(' ')} - its #{score(human.cards)} score"
   end
 
   def open_status_computer
-    "\nComputer has cards : #{gamer_cards(@computer).join(' ')}"\
-    "  - its #{score(@computer)} score"
+    "\nComputer has cards : #{gamer_cards(computer).join(' ')}"\
+    "  - its #{score(computer.cards)} score"
   end
 
   def closed_status_computer
-    "\nComputer has cards : #{closed_cards(@computer).join('  ')}"
+    "\nComputer has cards : #{closed_cards(computer).join('  ')}"
   end
 
   def closed_cards(gamer)

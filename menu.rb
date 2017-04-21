@@ -25,12 +25,12 @@ class Menu
   def menu_add_card
     begin
       game.add_card(game.human)
-      puts game.status_human if game.score(game.human) <= 21
+      puts game.status_human if game.score(game.human.cards) <= 21
     rescue RuntimeError => e
       puts "#{e.message}"
       puts "\ntry again"
     end
-    return game.computer_turn if game.score(game.human) <= 21 &&
+    return game.computer_turn if game.score(game.human.cards) <= 21 &&
                                  game.computer.cards.count == 2
     game.reset_deck
   end

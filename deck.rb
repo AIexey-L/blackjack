@@ -1,27 +1,31 @@
 class Deck
 
   def initialize
-    prepare_deck
+    deck_template
     @deck = @deck_sample.map do |card|
-      @siut.map { |siut| ["#{card.first}" + "#{siut}", card.last] }
+      @siut.map { |siut| [card.first.to_s + siut.to_s, card.last] }
     end
     @deck.flatten!(1).shuffle!
   end
 
-  def card_from_deck
-    @deck.pop
+  def get_card
+    get_cards
   end
 
-  def two_cards_from_deck
-    @deck.pop(2)
+  def get_two_cards
+    get_cards(2)
   end
 
   private
 
-  def prepare_deck
+  def deck_template
     numbers = (2..10).to_a.map { |card| [card, card] }
-    pics = ['J', 'Q', 'K'].map { |card| [card, 10] } << ['A', 11]
+    pics = %w(J, Q, K).map { |card| [card, 10] } << ['A', 11]
     @deck_sample = numbers + pics
     @siut = ["\u2661", "\u2662", "\u2667", "\u2664"]
+  end
+
+  def get_cards(q = 1)
+    @deck.pop q
   end
 end

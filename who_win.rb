@@ -1,9 +1,9 @@
 module WhoWin
   def who_win
-    if score(@human) > score(@computer) && score(@human) <= 21
+    if score(human.cards) > score(computer.cards) && score(human.cards) <= 21
       puts "\n--- Congratulations! You win! ---"
       human.money += @bank
-    elsif score(@human) < score(@computer) && score(@computer) <= 21
+    elsif score(human.cards) < score(computer.cards) && score(computer.cards) <= 21
       puts "\n--- Computer wins! ---"
       computer.money += @bank
     elsif draw?
@@ -17,7 +17,7 @@ module WhoWin
   end
 
   def if_lose(gamer)
-    return unless score(gamer) > 21
+    return unless score(gamer.cards) > 21
     puts "\n--- You lose! ---" if gamer == human
     puts "\n--- Computer loses ---" if gamer == computer
     puts status_human
@@ -47,8 +47,8 @@ module WhoWin
   private
 
   def draw?
-    score(@human) == score(@computer) &&
-      score(@human) <= 21 &&
-      score(@computer) <= 21
+    score(human.cards) == score(computer.cards) &&
+      score(human.cards) <= 21 &&
+      score(computer.cards) <= 21
   end
 end

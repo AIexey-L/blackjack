@@ -1,24 +1,25 @@
 module ScoreCount
-  def score(gamer)
-    first_or_second_ace(gamer) if gamer.cards.count == 2
-    third_ace(gamer) if gamer.cards.count == 3
-    separate_cards_score(gamer).sum
+  def score(cards)
+    first_or_second_ace(cards) if cards.count == 2
+    third_ace(cards) if cards.count == 3
+    separate_cards_score(cards).sum
   end
 
-  private
+  private 
 
-  def separate_cards_score(gamer)
-    gamer.cards.map(&:last)
+  def separate_cards_score(cards)
+    cards.map(&:last)
   end
   
-  def third_ace(gamer)
-    return unless separate_cards_score(gamer).pop == 11 &&
-                 separate_cards_score(gamer).sum > 21
-    separate_cards_score(gamer).sum - 10
+  def third_ace(cards)
+    return unless separate_cards_score(cards).pop == 11 &&
+                  separate_cards_score(cards).sum > 21
+    separate_cards_score(cards).sum - 10
   end
 
-  def first_or_second_ace(gamer)
-    return unless separate_cards_score(gamer).sum > 21
-    separate_cards_score(gamer).map { |ace| ace == 11 ? 1 : ace }.sum
+  # TODO переписать условие, т.к. при двух тузах сумма будет 2
+  def first_or_second_ace(cards)
+    return unless separate_cards_score(cards).sum > 21
+    separate_cards_score(cards).map { |ace| ace == 11 ? 1 : ace }.sum
   end
 end
